@@ -154,9 +154,32 @@ class _AppointmentPageState extends State<AppointmentPage> {
     }
   }
 
+  Future<void> compareStringWithKey() async {
+
+      // Access the Firestore collection
+      CollectionReference collectionRef =
+      FirebaseFirestore.instance.collection('appointmentDetails');
+
+      // Query the collection with the condition
+      QuerySnapshot querySnapshot =
+      await collectionRef.where('doctor', isEqualTo: widget.doctorName).get();
+
+      // Iterate over the documents that match the condition
+      querySnapshot.docs.forEach((doc) {
+        // Access the document data
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        // Access specific fields
+        String field = data['doctor'];
+
+        // Do something with the field value
+        print('Field value: $field');
+        print('Field value 2nd'+widget.doctorName.toString());
+      });
+  }
   Future<bool> getAppointmentDate() async {
     try {
       String? date = "";
+      String? field = "";
       final db = FirebaseFirestore.instance;
       final user = FirebaseAuth.instance.currentUser;
       await db
@@ -166,9 +189,32 @@ class _AppointmentPageState extends State<AppointmentPage> {
           .then((value) {
         date = value.docs.first.data()['date'];
       });
+
+      // compareStringWithKey();
+
+      CollectionReference collectionRef =
+      FirebaseFirestore.instance.collection('appointmentDetails');
+
+      // Query the collection with the condition
+      QuerySnapshot querySnapshot =
+      await collectionRef.where('doctor', isEqualTo: widget.doctorName).get();
+
+      // Iterate over the documents that match the condition
+      querySnapshot.docs.forEach((doc) {
+        // Access the document data
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        // Access specific fields
+        field = data['doctor'];
+
+        // Do something with the field value
+
+      });
+      print('Field value: $field');
+      print('Field value 2nd'+widget.doctorName.toString());
       log("getAppointmentDate, $date");
       DateTime appointmentDate = DateTime.parse(date!);
-      if (appointmentDate.compareTo(DateTime.now()) <= 1) {
+
+      if ((appointmentDate.compareTo(DateTime.now()) <= 1) && (field.toString()==widget.doctorName.toString())) {
         return true;
       }
     } catch (ex) {
