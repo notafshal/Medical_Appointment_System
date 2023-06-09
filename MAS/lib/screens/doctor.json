@@ -1,0 +1,20 @@
+{
+  "doctor": [
+    {
+      "name": "Afshal Maharjan",
+      "specialities": "Cardiologist"
+    },
+    {
+      "name": "Mamit Pradhan",
+      "specialities": "Cardiologist"
+    },
+    {
+      "name": "Bishal Gurung",
+      "specialities": "Cardiologist"
+    },
+    {
+      "name": "Manish Aryal",
+      "specialities": "Cardiologist"
+    }
+  ]
+}
