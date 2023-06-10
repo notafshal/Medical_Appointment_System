@@ -6,14 +6,14 @@ import 'package:doctor/common/pdf_report.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AppointmentInfoCard extends StatefulWidget {
-  const AppointmentInfoCard({Key? key});
+class AppointmentInfoCardUrgent extends StatefulWidget {
+  const AppointmentInfoCardUrgent({Key? key});
 
   @override
-  State<AppointmentInfoCard> createState() => _AppointmentInfoCardState();
+  State<AppointmentInfoCardUrgent> createState() => _AppointmentInfoCardUrgentState();
 }
 
-class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
+class _AppointmentInfoCardUrgentState extends State<AppointmentInfoCardUrgent> {
   Future<DocumentSnapshot?> getDocumentByUID(String uid) async {
     try {
       final snapshot = await FirebaseFirestore.instance.collection('appointmentDetails').doc(uid).get();
@@ -56,7 +56,7 @@ class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
             .collection('appointmentDetails')
             .where('doctorId', isEqualTo: user)
 
-            // Sort by 'urgent' field in descending order (true first)
+        // Sort by 'urgent' field in descending order (true first)
 
             .snapshots(),
         builder: (context, snapshots) {
@@ -92,34 +92,34 @@ class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
                   } else if (snapshot.hasData) {
                     // Document exists, access the data
                     Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                    if(data['Urgent']==0)
-                    {
-                      String name = data['userName'];
-                      String symptoms = data['symptoms'];
-                      String date = data['date'];
-                      String time = data['time'];
+                    if(data['Urgent']==1)
+                      {
+                        String name = data['userName'];
+                        String symptoms = data['symptoms'];
+                        String date = data['date'];
+                        String time = data['time'];
 
-                      return GestureDetector(
-                        onTap: () {
-                          if (pdfPath.isNotEmpty) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PdfReport(pdfPath: pdfPath),
-                              ),
-                            );
-                          }
-                        },
-                        child: Card(
-                          child: ListTile(
-                            leading: Text(name),
-                            trailing: Text(symptoms),
-                            title: Text(date),
-                            subtitle: Text(time),
+                        return GestureDetector(
+                          onTap: () {
+                            if (pdfPath.isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PdfReport(pdfPath: pdfPath),
+                                ),
+                              );
+                            }
+                          },
+                          child: Card(
+                            child: ListTile(
+                              leading: Text(name),
+                              trailing: Text(symptoms),
+                              title: Text(date),
+                              subtitle: Text(time),
+                            ),
                           ),
-                        ),
-                      );
-                    }
+                        );
+                      }
                   }
                   return Text('');
                 },

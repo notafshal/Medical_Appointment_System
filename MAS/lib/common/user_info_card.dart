@@ -68,7 +68,7 @@ class UserInfoCard extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "NMC: ${nmcNo!}",
+                          "${nmcNo!}",
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15,

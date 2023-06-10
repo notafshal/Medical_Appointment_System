@@ -3,7 +3,9 @@ import 'package:doctor/common/user_info_card.dart';
 import 'package:doctor/screens/invstigation_report.dart';
 import 'package:doctor/screens/login_page.dart';
 import 'package:flutter/material.dart';
-
+import 'package:doctor/common/urgentInfoCard.dart';
+import 'applist.dart';
+import 'applistu.dart';
 class DoctorPage extends StatefulWidget {
   const DoctorPage({Key? key}) : super(key: key);
 
@@ -80,9 +82,44 @@ class _DoctorPageState extends State<DoctorPage> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
+
                   ),
-                  const Center(
-                    child: AppointmentInfoCard(),
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    child: TextButton(
+                      child: Text('Urgent'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const AppListU()),
+                        );
+                      },
+                    ),
+                    // const Text(
+                    //   "Urgent Appointments",
+                    //   style:
+                    //   TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    // ),
+                  ),
+                  // const Center(
+                  //   child: AppointmentInfoCardUrgent(),
+                  // ),
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    child: TextButton(
+                      child: Text('Non Urgent'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const AppList()),
+                        );
+                      },
+                    ),
+                    // const Text(
+                    //   "Urgent Appointments",
+                    //   style:
+                    //   TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    // ),
                   ),
                 ],
               ),
