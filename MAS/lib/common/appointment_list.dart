@@ -55,9 +55,9 @@ class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
         stream: FirebaseFirestore.instance
             .collection('appointmentDetails')
             .where('doctorId', isEqualTo: user)
-
+            .orderBy('date', descending: false)
+            .orderBy('time', descending: false)
             // Sort by 'urgent' field in descending order (true first)
-
             .snapshots(),
         builder: (context, snapshots) {
           if (snapshots.connectionState == ConnectionState.waiting) {

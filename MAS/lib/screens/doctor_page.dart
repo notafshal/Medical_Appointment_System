@@ -1,11 +1,13 @@
 import 'package:doctor/common/appointment_list.dart';
 import 'package:doctor/common/user_info_card.dart';
+import 'package:doctor/screens/editDoctor.dart';
 import 'package:doctor/screens/invstigation_report.dart';
 import 'package:doctor/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor/common/urgentInfoCard.dart';
 import 'applist.dart';
 import 'applistu.dart';
+import 'selectDoctor.dart';
 class DoctorPage extends StatefulWidget {
   const DoctorPage({Key? key}) : super(key: key);
 
@@ -64,6 +66,17 @@ class _DoctorPageState extends State<DoctorPage> {
           appBar: AppBar(
             title: const Text("Home"),
             automaticallyImplyLeading: false,
+            actions: [
+              IconButton(onPressed: (
+
+                  ){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => editDoctor()),
+                );
+              }, icon: Icon(Icons.edit))
+            ],
           ),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -86,7 +99,7 @@ class _DoctorPageState extends State<DoctorPage> {
                   ),
                   Container(
                     margin: const EdgeInsets.all(10),
-                    child: TextButton(
+                    child: ElevatedButton(
                       child: Text('Urgent'),
                       onPressed: () {
                         Navigator.push(
@@ -106,7 +119,7 @@ class _DoctorPageState extends State<DoctorPage> {
                   // ),
                   Container(
                     margin: const EdgeInsets.all(10),
-                    child: TextButton(
+                    child: ElevatedButton(
                       child: Text('Non Urgent'),
                       onPressed: () {
                         Navigator.push(

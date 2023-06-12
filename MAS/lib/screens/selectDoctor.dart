@@ -17,6 +17,7 @@ import '../common/user_info_card.dart';
 import '../provider/TimeProvider.dart';
 import 'selectDoctor.dart';
 import '../screens/appointment_page.dart';
+import 'docDetail.dart';
 
 class selectDoctor extends StatefulWidget {
   final userId;
@@ -63,6 +64,7 @@ class _selectDoctorState extends State<selectDoctor> {
     dateTimeController.text = "";
     super.initState();
   }
+
   final db = FirebaseFirestore.instance;
 
   Stream<QuerySnapshot<Object?>>? stremQuery;
@@ -85,11 +87,12 @@ class _selectDoctorState extends State<selectDoctor> {
     Future<void> compareStringWithKey() async {
       // Access the Firestore collection
       CollectionReference collectionRef =
-      FirebaseFirestore.instance.collection('appointmentDetails');
+          FirebaseFirestore.instance.collection('appointmentDetails');
 
       // Query the collection with the condition
-      QuerySnapshot querySnapshot =
-      await collectionRef.where('doctor', isEqualTo: widget.doctorName).get();
+      QuerySnapshot querySnapshot = await collectionRef
+          .where('doctor', isEqualTo: widget.doctorName)
+          .get();
 
       // Iterate over the documents that match the condition
       querySnapshot.docs.forEach((doc) {
@@ -121,11 +124,12 @@ class _selectDoctorState extends State<selectDoctor> {
 
         // compareStringWithKey();
         CollectionReference collectionRef =
-        FirebaseFirestore.instance.collection('appointmentDetails');
+            FirebaseFirestore.instance.collection('appointmentDetails');
 
         // Query the collection with the condition
-        QuerySnapshot querySnapshot =
-        await collectionRef.where('doctor', isEqualTo: widget.doctorName).get();
+        QuerySnapshot querySnapshot = await collectionRef
+            .where('doctor', isEqualTo: widget.doctorName)
+            .get();
 
         // Iterate over the documents that match the condition
         querySnapshot.docs.forEach((doc) {
@@ -147,63 +151,62 @@ class _selectDoctorState extends State<selectDoctor> {
     }
 
     void saveAppointmentDetails() async {
-
       final db = FirebaseFirestore.instance;
       if (widget.time.isEmpty) {
         AlertInfo(
-            message: "Missed To Select Time.",
-            backgroundColor: shrineErrorRed)
+                message: "Missed To Select Time.",
+                backgroundColor: shrineErrorRed)
             .showInfo(context);
         return;
       }
       if (widget.date!.isEmpty) {
         AlertInfo(
-            message: "Missed To Select Date.",
-            backgroundColor: shrineErrorRed)
+                message: "Missed To Select Date.",
+                backgroundColor: shrineErrorRed)
             .showInfo(context);
         return;
       }
       if (await getAppointmentDate()) {
         AlertInfo(
-            message: "You have already a Booking.",
-            backgroundColor: shrineErrorRed)
+                message: "You have already a Booking.",
+                backgroundColor: shrineErrorRed)
             .showInfo(context);
         Future.delayed(const Duration(seconds: 2))
             .then((value) => Navigator.pop(context));
         return;
       }
-        try {
-          print("TRYINGGGGG");
-          await db
-              .collection('appointmentDetails')
-              .add({
-            "userId": widget.userId,
-            "date": widget.date,
-            "time": widget.time,
-            "doctor": widget.doctorName,
-            "doctorId": widget.doctorId,
-            "symptoms": widget.symptoms,
-            "userName": widget.userName,
-            "Urgent": widget.cValue
-          })
-              .then((value) =>
-              AlertInfo(
-                  message: "Appointment Booked",
-                  isSuccess: true,
-                  backgroundColor: successAlert)
-                  .showInfo(context))
-              .then((value) => Navigator.pop(context));
-        } on FirebaseException catch (ex) {
-          log(ex.toString());
-          AlertInfo(
-              message: "Some Error Occured", backgroundColor: shrineErrorRed)
-              .showInfo(context);
-        } catch (ex) {
-          AlertInfo(
-              message: "Some Error Occured", backgroundColor: shrineErrorRed)
-              .showInfo(context);
-        }
+      try {
+        print("TRYINGGGGG");
+        await db
+            .collection('appointmentDetails')
+            .add({
+              "userId": widget.userId,
+              "date": widget.date,
+              "time": widget.time,
+              "doctor": widget.doctorName,
+              "doctorId": widget.doctorId,
+              "symptoms": widget.symptoms,
+              "userName": widget.userName,
+              "Urgent": widget.cValue
+            })
+            .then((value) => AlertInfo(
+                    message: "Appointment Booked",
+                    isSuccess: true,
+                    backgroundColor: successAlert)
+                .showInfo(context))
+            .then((value) => Navigator.pop(context));
+      } on FirebaseException catch (ex) {
+        log(ex.toString());
+        AlertInfo(
+                message: "Some Error Occured", backgroundColor: shrineErrorRed)
+            .showInfo(context);
+      } catch (ex) {
+        AlertInfo(
+                message: "Some Error Occured", backgroundColor: shrineErrorRed)
+            .showInfo(context);
+      }
     }
+
     return Scaffold(
       // appBar: widget.doctorName!
       //     ? AppBar(
@@ -231,7 +234,22 @@ class _selectDoctorState extends State<selectDoctor> {
                       print(data);
                       return GestureDetector(
                           onTap: () {
-                            saveAppointmentDetails();
+                            //saveAppointmentDetails();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorDetails(
+                                        data['uid'].toString(),
+                                        widget.userId,
+                                        widget.date,
+                                        widget.time,
+                                        widget.doctorName,
+                                        widget.doctorId,
+                                        widget.symptoms,
+                                        widget.userName,
+                                        cValue,
+                                      )),
+                            );
                             print("TAPPED HERE " + data['name']);
                           },
                           child: Padding(
@@ -272,6 +290,5 @@ class _selectDoctorState extends State<selectDoctor> {
         ),
       ),
     );
-
   }
 }

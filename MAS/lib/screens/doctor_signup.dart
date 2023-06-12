@@ -287,7 +287,7 @@ class _DoctorSignupState extends State<DoctorSignup> {
       userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _paswordController.text);
-
+      String? uid = userCredential.user?.uid;
       // Sending Email Verification
       log("Sening Email Verification ${userCredential.user}");
       await userCredential.user!.sendEmailVerification();
@@ -312,6 +312,8 @@ class _DoctorSignupState extends State<DoctorSignup> {
             "isDoctor": true,
             "vistingTime": "10:00-16:00",
             "createdAt": DateTime.parse(Timestamp.now().toDate().toString()),
+            "uid" : uid,
+            "symptoms" : " ",
           })
           .then((value) => AlertInfo(
                   message: "Registration Success"
