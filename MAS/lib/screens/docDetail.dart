@@ -26,10 +26,7 @@ class DoctorDetails extends StatefulWidget {
 }
 
 class _DoctorDetailsState extends State<DoctorDetails> {
-  List<String> specialities = ['Clinical Cardiology', 'Echocardiology'];
-  List<String> qualifications = ['qualification1', 'qualification2'];
-  List<String> memeberships = ['memebership1', 'memebership2'];
-
+  String? name;
   Future<void> compareStringWithKey() async {
     // Access the Firestore collection
     CollectionReference collectionRef =
@@ -58,6 +55,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     try {
       String? date = "";
       String? field = "";
+
       final db = FirebaseFirestore.instance;
       final user = FirebaseAuth.instance.currentUser;
       await db
@@ -129,11 +127,11 @@ class _DoctorDetailsState extends State<DoctorDetails> {
         "userId": widget.userId,
         "date": widget.date,
         "time": widget.time,
-        "doctor": widget.doctorName,
-        "doctorId": widget.doctorId,
+        "doctor": name,
+        "doctorId": widget.uid.toString().trim(),
         "symptoms": widget.symptoms,
         "userName": widget.userName,
-        "Urgent": widget.cValue
+        "Urgent": widget.cValue.toString(),
       })
           .then((value) => AlertInfo(
           message: "Appointment Booked",
@@ -172,7 +170,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 var data = snapshot.data!.data();
                 print("DR UID      "+widget.uid);
                 print("DATA"+data.toString());
-                var name = data!['name'];
+                name = data!['name'];
                 print("NAME   "+name.toString());
                 var nmcNo = data!['nmcNo'].toString();
                 var specialization = data!['specialization'].toString();
@@ -199,7 +197,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                               SizedBox(height: 10),
 
                               Text(
-                                'Name : '+name,
+                                'Name : '+ name.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20
@@ -241,24 +239,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                   ),
                                 ),
                               ),
-
-                              // ListView.builder(
-                              //   shrinkWrap: true,
-                              //   itemCount: specialities.length,
-                              //   itemBuilder: (context, index) {
-                              //     return Padding(
-                              //         padding: EdgeInsets.all(5),
-                              //         child: Text(
-                              //           '${index +
-                              //               1}. $specialities}',
-                              //           style: TextStyle(
-                              //               fontSize: 18
-                              //           ),
-                              //         )
-                              //     );
-                              //   },
-                              // ),
-
                               SizedBox(height: 20),
 
                               Text(
@@ -275,22 +255,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                   ),
                                 ),
                               ),
-                              // ListView.builder(
-                              //   shrinkWrap: true,
-                              //   itemCount: specialities.length,
-                              //   itemBuilder: (context, index) {
-                              //     return Padding(
-                              //         padding: EdgeInsets.all(5),
-                              //         child: Text(
-                              //           '${index +
-                              //               1}. ${qualifications[index]}',
-                              //           style: TextStyle(
-                              //               fontSize: 18
-                              //           ),
-                              //         )
-                              //     );
-                              //   },
-                              // ),
 
                               SizedBox(height: 20),
 
@@ -308,22 +272,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                   ),
                                 ),
                               ),
-                              // ListView.builder(
-                              //   shrinkWrap: true,
-                              //   itemCount: memeberships.length,
-                              //   itemBuilder: (context, index) {
-                              //     return Padding(
-                              //         padding: EdgeInsets.all(5),
-                              //         child: Text(
-                              //           '${index +
-                              //               1}. ${memeberships[index]}',
-                              //           style: TextStyle(
-                              //               fontSize: 18
-                              //           ),
-                              //         )
-                              //     );
-                              //   },
-                              // ),
                               ElevatedButton(onPressed: () {
                                 saveAppointmentDetails();
                               }, child: Text("Book")),

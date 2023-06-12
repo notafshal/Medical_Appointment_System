@@ -93,47 +93,63 @@ class _DoctorPageState extends State<DoctorPage> {
                     child: const Text(
                       "Your Appointment List",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
 
                   ),
                   Container(
                     margin: const EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      child: Text('Urgent'),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const AppListU()),
-                        );
-                      },
-                    ),
-                    // const Text(
-                    //   "Urgent Appointments",
-                    //   style:
-                    //   TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                    // ),
+
                   ),
-                  // const Center(
-                  //   child: AppointmentInfoCardUrgent(),
+                  const Center(
+                    child: AppointmentInfoCard(),
+                  ),
+                  // Container(
+                  //   margin: const EdgeInsets.all(10),
+                  //   child: const Text(
+                  //     "Your Appointment List",
+                  //     style:
+                  //         TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  //   ),
+                  //
                   // ),
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      child: Text('Non Urgent'),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const AppList()),
-                        );
-                      },
-                    ),
-                    // const Text(
-                    //   "Urgent Appointments",
-                    //   style:
-                    //   TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                    // ),
-                  ),
+                  // Container(
+                  //   margin: const EdgeInsets.all(10),
+                  //   child: ElevatedButton(
+                  //     child: Text('Urgent'),
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(builder: (context) => const AppListU()),
+                  //       );
+                  //     },
+                  //   ),
+                  //   // const Text(
+                  //   //   "Urgent Appointments",
+                  //   //   style:
+                  //   //   TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  //   // ),
+                  // ),
+                  // // const Center(
+                  // //   child: AppointmentInfoCardUrgent(),
+                  // // ),
+                  // Container(
+                  //   margin: const EdgeInsets.all(10),
+                  //   child: ElevatedButton(
+                  //     child: Text('Non Urgent'),
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(builder: (context) => const AppList()),
+                  //       );
+                  //     },
+                  //   ),
+                  //   // const Text(
+                  //   //   "Urgent Appointments",
+                  //   //   style:
+                  //   //   TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  //   // ),
+                  // ),
                 ],
               ),
             ),

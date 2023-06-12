@@ -55,8 +55,11 @@ class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
         stream: FirebaseFirestore.instance
             .collection('appointmentDetails')
             .where('doctorId', isEqualTo: user)
+            .orderBy('Urgent', descending: true)
             .orderBy('date', descending: false)
             .orderBy('time', descending: false)
+            //.orderBy('userName', descending: false)
+            // .orderBy('userName', descending: false)
             // Sort by 'urgent' field in descending order (true first)
             .snapshots(),
         builder: (context, snapshots) {
@@ -92,33 +95,61 @@ class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
                   } else if (snapshot.hasData) {
                     // Document exists, access the data
                     Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                    if(data['Urgent']==0)
+                    if(true)
                     {
                       String name = data['userName'];
                       String symptoms = data['symptoms'];
                       String date = data['date'];
                       String time = data['time'];
+                      print("URGENT DATA+ "+data['Urgent']);
+                      if(data['Urgent']=="1")
+                      {
+                        return GestureDetector(
+                          onTap: () {
+                            if (pdfPath.isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PdfReport(pdfPath: pdfPath),
+                                ),
+                              );
+                            }
+                          },
 
-                      return GestureDetector(
-                        onTap: () {
-                          if (pdfPath.isNotEmpty) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PdfReport(pdfPath: pdfPath),
-                              ),
-                            );
-                          }
-                        },
-                        child: Card(
-                          child: ListTile(
-                            leading: Text(name),
-                            trailing: Text(symptoms),
-                            title: Text(date),
-                            subtitle: Text(time),
+                          child: Card(
+                            child: ListTile(
+                              leading: Text(name),
+                              trailing: Icon(Icons.emergency),
+                              title: Text(date),
+                              subtitle: Text(time),
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
+                      else
+                        {
+                          return GestureDetector(
+                            onTap: () {
+                              if (pdfPath.isNotEmpty) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PdfReport(pdfPath: pdfPath),
+                                  ),
+                                );
+                              }
+                            },
+
+                            child: Card(
+                              child: ListTile(
+                                leading: Text(name),
+                                trailing: Icon(Icons.emergency_outlined),
+                                title: Text(date),
+                                subtitle: Text(time),
+                              ),
+                            ),
+                          );
+                        }
                     }
                   }
                   return Text('');

@@ -21,12 +21,7 @@ class editDoctor extends StatefulWidget {
 }
 
 class _editDoctorState extends State<editDoctor> {
-  final TextEditingController _firstnameController = TextEditingController();
-  final TextEditingController _lastnameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _paswordController = TextEditingController();
-  final TextEditingController _nmcNo = TextEditingController();
-  final TextEditingController _mobile = TextEditingController();
+  TextEditingController _nmcNo = TextEditingController();
   final TextEditingController _specialization = TextEditingController();
   final TextEditingController _vistingHospital = TextEditingController();
   final TextEditingController _qualification = TextEditingController();
@@ -63,6 +58,11 @@ class _editDoctorState extends State<editDoctor> {
         visitingHospital = data!['visitingHospital'].toString();
         vistingTime = data!['vistingTime'].toString();
         symptoms = data!['symptom'];
+        _nmcNo.text = nmcNo;
+        _specialization.text = specialization;
+        _qualification.text = qualification;
+        _vistingTime.text = vistingTime;
+        _symptomsC.text = symptoms;
        print("DATA                "+name);
       } else {
         // Document does not exist
@@ -92,143 +92,140 @@ class _editDoctorState extends State<editDoctor> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: primary,
-        body: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      child: LogoName(
-                        height: 20,
-                        width: 20,
-                        textSize: 18,
+        body: SingleChildScrollView(
+          child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        child: LogoName(
+                          height: 20,
+                          width: 20,
+                          textSize: 18,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Text("Edit Page", style: AppTextStyle.headline2),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-
-                        ],
+                      const SizedBox(
+                        height: 40,
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Form(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(name, style: AppTextStyle.headline3),
-                              const SizedBox(
-                                width: 20,
-                              ),
+                      Text("Information Page", style: AppTextStyle.headline2),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
 
-                            ],
-                          ),
-                          CommonTextField(
-                            labelText: qualification,
-                            controller: _qualification,
-                          ),
-
-                          CommonTextField(
-                            labelText: nmcNo,
-                            controller: _nmcNo,
-                          ),
-
-                          // CommonTextField(
-                          //   labelText: "Specilization",
-                          //   controller: _specialization,
-                          //   validator: (value) {
-                          //     if (value!.isEmpty) {
-                          //       return "Specialization Can't Be Empty";
-                          //     }
-                          //     return null;
-                          //   },
-                          // ),
-                          CommonTextField(
-                            labelText: specialization,
-                            controller: _specialization,
-                          ),
-                          // CommonTextField(
-                          //   labelText: visitingHospital,
-                          //   controller: _vistingHospital,
-                          //   validator: (value) {
-                          //     if (value!.isEmpty) {
-                          //       return "Field Can't Be Empty";
-                          //     }
-                          //     return null;
-                          //   },
-                          // // ),
-                          CommonTextField(
-                            labelText: vistingTime,
-                            controller: _vistingTime,
-
-                          ),
-                          CommonTextField(
-                            labelText: symptoms,
-                            controller: _symptomsC,
-
-                          ),
-                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    MaterialCommonButton(
-                        isImage: false,
-                        color: Colors.blue,
-                        text: "Submit",
-                        onPressed: () async {
-                          FirebaseFirestore.instance
-                              .collection('doctor')
-                              .doc(auth.currentUser!.uid)
-                              .update({
-                       //   'name' : name,
-                          'nmcNo' : _nmcNo.text,
-                          'specialization' : _specialization.text,
-                          'qualification' : _qualification.text,
-                          'vistingTime' : _vistingTime.text,
-                          'symptom' : _symptomsC.text,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
 
-                          }).then((value) {
-                            Navigator.pop(context);
-                          }).onError((error, stackTrace) async {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    AlertDialog(
-                                      title: const Text('Error'),
-                                      content: Text(error.toString()),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () => Navigator.pop(
-                                              context, 'OK'),
-                                          child: const Text('OK'),
-                                        ),
-                                      ],
-                                    ));
-                          });
-                        },
-                        size: MediaQuery.of(context).size.width * 0.9),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Form(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(name, style: AppTextStyle.headline3),
+                                const SizedBox(
+                                  width: 20,
+                                ),
 
-                    SizedBox(
-                      height: 10,
-                    ),
-                ]),
+                              ],
+                            ),
+                            CommonTextField(
+                              hintText: qualification,
+                              labelText: "Qualification",
+                              controller: _qualification,
+                            ),
+
+                            CommonTextField(
+                              hintText: nmcNo,
+                              labelText: "nmcNo",
+                              controller: _nmcNo,
+                            ),
+
+                            // CommonTextField(
+                            //   labelText: "Specilization",
+                            //   controller: _specialization,
+                            //   validator: (value) {
+                            //     if (value!.isEmpty) {
+                            //       return "Specialization Can't Be Empty";
+                            //     }
+                            //     return null;
+                            //   },
+                            // ),
+                            CommonTextField(
+                              hintText: specialization,
+                              labelText: "Specialization",
+                              controller: _specialization,
+                            ),
+                            CommonTextField(
+                              hintText: vistingTime,
+                              labelText: "Visiting Time",
+                              controller: _vistingTime,
+
+                            ),
+                            CommonTextField(
+                              hintText: symptoms,
+                              labelText: "Symptoms",
+                              controller: _symptomsC,
+
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      MaterialCommonButton(
+                          isImage: false,
+                          color: Colors.blue,
+                          text: "Submit",
+                          onPressed: () async {
+                            FirebaseFirestore.instance
+                                .collection('doctor')
+                                .doc(auth.currentUser!.uid)
+                                .update({
+                         //   'name' : name,
+                            'nmcNo' : _nmcNo.text,
+                            'specialization' : _specialization.text,
+                            'qualification' : _qualification.text,
+                            'vistingTime' : _vistingTime.text,
+                            'symptom' : _symptomsC.text,
+
+                            }).then((value) {
+                              Navigator.pop(context);
+                            }).onError((error, stackTrace) async {
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                        title: const Text('Error'),
+                                        content: Text(error.toString()),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                context, 'OK'),
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      ));
+                            });
+                          },
+                          size: MediaQuery.of(context).size.width * 0.9),
+                      const SizedBox(
+                        height: 15,
+                      ),
+
+                      SizedBox(
+                        height: 10,
+                      ),
+                  ]),
+        ),
       ),
     );
   }

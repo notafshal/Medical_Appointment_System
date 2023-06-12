@@ -52,10 +52,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Container(height: 100, child: CategoriesCard()),
-        const Text(
-          "Available Doctors",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
+
         Center(
           child: ElevatedButton(
             child: const Text('Book an appointment'),
@@ -72,11 +69,15 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        // Flexible(
-        //     child: DoctorCard(
-        //   search: true,
-        //   query: query!,
-        // )),
+        const Text(
+          "Available Doctors",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        Flexible(
+            child: DoctorCard(
+          search: true,
+          query: query!,
+        )),
       ],
     ));
   }

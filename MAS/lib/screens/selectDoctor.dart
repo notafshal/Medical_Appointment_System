@@ -232,59 +232,64 @@ class _selectDoctorState extends State<selectDoctor> {
                           as Map<String, dynamic>;
                       print("data printing");
                       print(data);
-                      return GestureDetector(
-                          onTap: () {
-                            //saveAppointmentDetails();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DoctorDetails(
-                                        data['uid'].toString(),
-                                        widget.userId,
-                                        widget.date,
-                                        widget.time,
-                                        widget.doctorName,
-                                        widget.doctorId,
-                                        widget.symptoms,
-                                        widget.userName,
-                                        cValue,
-                                      )),
-                            );
-                            print("TAPPED HERE " + data['name']);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20.0, right: 20.0, top: 10),
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  SizedBox(
-                                    height: 200,
-                                    width: 320,
-                                    child: Card(
-                                      child: ListTile(
-                                        leading: Image.network(
-                                          "https://royalphnompenhhospital.com/royalpp/storage/app/uploads/2/2022-06-30/dr_sarisak_01.jpg",
-                                          fit: BoxFit.fitHeight,
+                      if(data['symptom'].contains(widget.symptoms.toString())){
+                        return GestureDetector(
+                            onTap: () {
+                              //saveAppointmentDetails();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DoctorDetails(
+                                          data['uid'].toString(),
+                                          widget.userId,
+                                          widget.date,
+                                          widget.time,
+                                          widget.doctorName,
+                                          widget.doctorId,
+                                          widget.symptoms,
+                                          widget.userName,
+                                          cValue,
+                                        )),
+                              );
+                              print("TAPPED HERE " + data['name']);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20.0, right: 20.0, top: 10),
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                      height: 200,
+                                      width: 320,
+                                      child: Card(
+                                        child: ListTile(
+                                          leading: Image.network(
+                                            "https://royalphnompenhhospital.com/royalpp/storage/app/uploads/2/2022-06-30/dr_sarisak_01.jpg",
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                          title: Text("Dr. ${data['name']}"),
+                                          subtitle: Text(
+                                              "${data['specialization']} / ${data['qualification']}"),
                                         ),
-                                        title: Text("Dr. ${data['name']}"),
-                                        subtitle: Text(
-                                            "${data['specialization']} / ${data['qualification']}"),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ));
+                            ));
+                      }
+                      else {
+                        return Container();
+                      }
                     });
           },
         ),
