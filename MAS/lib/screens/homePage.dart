@@ -4,7 +4,7 @@ import 'package:doctor/common/categories_card.dart';
 import 'package:doctor/common/doctorCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'appointment_page.dart';
 import '../common/user_info_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   String? query = "";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,6 +52,23 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Container(height: 100, child: CategoriesCard()),
+
+        Center(
+          child: ElevatedButton(
+            child: const Text('Book an appointment'),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AppointmentPage(
+                    doctorId: "doc.id",
+                    doctorName: userName ,
+                    specialization:
+                    "sss",
+                    nmcNo: "oc['nmcNo']"),
+              ),
+            ),
+          ),
+        ),
         const Text(
           "Available Doctors",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

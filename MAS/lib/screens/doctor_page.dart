@@ -1,9 +1,13 @@
 import 'package:doctor/common/appointment_list.dart';
 import 'package:doctor/common/user_info_card.dart';
+import 'package:doctor/screens/editDoctor.dart';
 import 'package:doctor/screens/invstigation_report.dart';
 import 'package:doctor/screens/login_page.dart';
 import 'package:flutter/material.dart';
-
+import 'package:doctor/common/urgentInfoCard.dart';
+import 'applist.dart';
+import 'applistu.dart';
+import 'selectDoctor.dart';
 class DoctorPage extends StatefulWidget {
   const DoctorPage({Key? key}) : super(key: key);
 
@@ -62,6 +66,17 @@ class _DoctorPageState extends State<DoctorPage> {
           appBar: AppBar(
             title: const Text("Home"),
             automaticallyImplyLeading: false,
+            actions: [
+              IconButton(onPressed: (
+
+                  ){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => editDoctor()),
+                );
+              }, icon: Icon(Icons.edit))
+            ],
           ),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -78,12 +93,63 @@ class _DoctorPageState extends State<DoctorPage> {
                     child: const Text(
                       "Your Appointment List",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
+
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(10),
+
                   ),
                   const Center(
                     child: AppointmentInfoCard(),
                   ),
+                  // Container(
+                  //   margin: const EdgeInsets.all(10),
+                  //   child: const Text(
+                  //     "Your Appointment List",
+                  //     style:
+                  //         TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  //   ),
+                  //
+                  // ),
+                  // Container(
+                  //   margin: const EdgeInsets.all(10),
+                  //   child: ElevatedButton(
+                  //     child: Text('Urgent'),
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(builder: (context) => const AppListU()),
+                  //       );
+                  //     },
+                  //   ),
+                  //   // const Text(
+                  //   //   "Urgent Appointments",
+                  //   //   style:
+                  //   //   TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  //   // ),
+                  // ),
+                  // // const Center(
+                  // //   child: AppointmentInfoCardUrgent(),
+                  // // ),
+                  // Container(
+                  //   margin: const EdgeInsets.all(10),
+                  //   child: ElevatedButton(
+                  //     child: Text('Non Urgent'),
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(builder: (context) => const AppList()),
+                  //       );
+                  //     },
+                  //   ),
+                  //   // const Text(
+                  //   //   "Urgent Appointments",
+                  //   //   style:
+                  //   //   TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  //   // ),
+                  // ),
                 ],
               ),
             ),

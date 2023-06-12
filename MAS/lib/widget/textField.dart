@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CommonTextField extends StatelessWidget {
   String? labelText;
+  String? hintText;
   TextEditingController? controller;
   Widget? suffix;
   TextInputType? textInputType;
@@ -13,6 +14,7 @@ class CommonTextField extends StatelessWidget {
       {Key? key,
       required this.labelText,
       required this.controller,
+        this.hintText,
       this.errorText,
       this.textInputType,
       this.validator,
@@ -50,6 +52,7 @@ class CommonTextField extends StatelessWidget {
                         const EdgeInsets.only(left: 14.0, top: 10.0),
                     border: InputBorder.none,
                     labelText: labelText,
+                    hintText: hintText,
                     suffix: suffix,
                     labelStyle: TextStyle(color: Colors.white, fontSize: 12),
                     focusColor: Colors.white,

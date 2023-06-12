@@ -6,14 +6,14 @@ import 'package:doctor/common/pdf_report.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AppointmentInfoCard extends StatefulWidget {
-  const AppointmentInfoCard({Key? key});
+class AppointmentInfoCardUrgent extends StatefulWidget {
+  const AppointmentInfoCardUrgent({Key? key});
 
   @override
-  State<AppointmentInfoCard> createState() => _AppointmentInfoCardState();
+  State<AppointmentInfoCardUrgent> createState() => _AppointmentInfoCardUrgentState();
 }
 
-class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
+class _AppointmentInfoCardUrgentState extends State<AppointmentInfoCardUrgent> {
   Future<DocumentSnapshot?> getDocumentByUID(String uid) async {
     try {
       final snapshot = await FirebaseFirestore.instance.collection('appointmentDetails').doc(uid).get();
@@ -55,12 +55,10 @@ class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
         stream: FirebaseFirestore.instance
             .collection('appointmentDetails')
             .where('doctorId', isEqualTo: user)
-            .orderBy('Urgent', descending: true)
             .orderBy('date', descending: false)
             .orderBy('time', descending: false)
-            //.orderBy('userName', descending: false)
-            // .orderBy('userName', descending: false)
-            // Sort by 'urgent' field in descending order (true first)
+        // Sort by 'urgent' field in descending order (true first)
+
             .snapshots(),
         builder: (context, snapshots) {
           if (snapshots.connectionState == ConnectionState.waiting) {
@@ -95,15 +93,13 @@ class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
                   } else if (snapshot.hasData) {
                     // Document exists, access the data
                     Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                    if(true)
-                    {
-                      String name = data['userName'];
-                      String symptoms = data['symptoms'];
-                      String date = data['date'];
-                      String time = data['time'];
-                      print("URGENT DATA+ "+data['Urgent']);
-                      if(data['Urgent']=="1")
+                    if(data['Urgent']==1)
                       {
+                        String name = data['userName'];
+                        String symptoms = data['symptoms'];
+                        String date = data['date'];
+                        String time = data['time'];
+
                         return GestureDetector(
                           onTap: () {
                             if (pdfPath.isNotEmpty) {
@@ -115,42 +111,16 @@ class _AppointmentInfoCardState extends State<AppointmentInfoCard> {
                               );
                             }
                           },
-
                           child: Card(
                             child: ListTile(
                               leading: Text(name),
-                              trailing: Icon(Icons.emergency),
+                              trailing: Text(symptoms),
                               title: Text(date),
                               subtitle: Text(time),
                             ),
                           ),
                         );
                       }
-                      else
-                        {
-                          return GestureDetector(
-                            onTap: () {
-                              if (pdfPath.isNotEmpty) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PdfReport(pdfPath: pdfPath),
-                                  ),
-                                );
-                              }
-                            },
-
-                            child: Card(
-                              child: ListTile(
-                                leading: Text(name),
-                                trailing: Icon(Icons.emergency_outlined),
-                                title: Text(date),
-                                subtitle: Text(time),
-                              ),
-                            ),
-                          );
-                        }
-                    }
                   }
                   return Text('');
                 },
